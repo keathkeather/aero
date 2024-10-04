@@ -1,14 +1,15 @@
 import { Stack } from 'expo-router';
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native';
-
+import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet, Image } from 'react-native';
+import ConversionTool from '~/components/unitConverter';
 export default function Eqs() {
   const [p, setP] = useState('');
   const [ρ, setρ] = useState('');
   const [t, setT] = useState('');
-  const [r] = useState(287); 
+  const [r] = useState(287);
   const [selectedVariable, setSelectedVariable] = useState('P');
   const [modalVisible, setModalVisible] = useState(false);
+  const [conversionModalVisible, setConversionModalVisible] = useState(false);
   const [result, setResult] = useState('');
   const handleCalculation = () => {
     let result;
@@ -32,106 +33,133 @@ export default function Eqs() {
     setP('');
     setρ('');
     setT('');
+    setResult('');
   };
 
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <View style={styles.container}>
-        {/* Button to select variable */}
-        <TouchableOpacity
-          className="w-[68.47px] h-[66px] p-4 left-[24px] top-[132px] absolute bg-[#ff5a1f] rounded-2xl justify-center items-center gap-2 inline-flex"
-          onPress={() => setModalVisible(true)}
-        >
-          <Text className="text-white text-[32px] font-bold font-Inter_900Black">
-            {selectedVariable}
-          </Text>
+
+      <View className=" relative rounded-[32px] bg-[#f2f2f2] shadow">
+        <TouchableOpacity onPress={() => setConversionModalVisible(true)}>
+          <Image
+            className="absolute left-[336px] top-[61px] h-[30px] w-[30px]"
+            source={require('../assets/Images/ConversionIcon.png')}></Image>
         </TouchableOpacity>
-        <View className="w-[213px] h-[53px] left-[154px] top-[139px] absolute rounded-[5px] border border-[#242424]">
-        <View className="w-[213px] h-[53px] left-0 top-0 absolute rounded-md border border-[#242424] ">
-          <TextInput
-            className=" left-[11.87px] top-[14.84px] absolute text-[#242424] text-xl font-bold font-Inter_900Black"
-            placeholder={selectedVariable}
-            value={result}
-            onChangeText={setP}
-            keyboardType="number-pad"
-          
-          />
+
+        <ConversionTool
+          isVisible={conversionModalVisible}
+          onClose={() => setConversionModalVisible(false)}
+          initialValue={100}
+          initialUnit="kg"
+          initialCategory="Length" 
+        />
+        <View style={styles.container}>
+          {/* Button to select variable */}
+          <View className="absolute left-[24px] top-[132px] inline-flex h-[66px] w-[68.47px] items-center justify-center gap-2 rounded-2xl bg-[#ff5a1f] p-4">
+            <Text className="font-Inter_900Black text-[32px] font-bold text-white">
+              {selectedVariable}
+            </Text>
+          </View>
+          <View className="absolute left-[154px] top-[139px] h-[53px] w-[213px] rounded-[5px] border border-[#242424]">
+            <View className="absolute left-0 top-0 h-[53px] w-[213px] rounded-md border border-[#242424] ">
+              <TextInput
+                className=" font-Inter_900Black absolute left-[11.87px] top-[14.84px] text-xl font-bold text-[#242424]"
+                placeholder={selectedVariable}
+                value={result}
+                onChangeText={setP}
+                keyboardType="number-pad"
+              />
+            </View>
+          </View>
         </View>
-      </View>
-      <View className='mt-[114px]'>
+        <View className="border-black/10 absolute left-[24px] top-[382px] h-[50px] w-[343px] rounded-[5px] border">
           {/* Input fields for factors */}
-        {selectedVariable !== 'P' && (
-          <TextInput
-            className='border border-gray-300 p-2.5 mb-2.5'
-            placeholder="P"
-            value={p}
-            onChangeText={setP}
-            keyboardType="numeric"
-          />
-        )}
-        {selectedVariable !== 'ρ' && (
-          <TextInput
-          className='border border-gray-300 p-2.5 mb-2.5'
-            placeholder="ρ"
-            value={ρ}
-            onChangeText={setρ}
-            keyboardType="numeric"
-          />
-        )}
-        {selectedVariable !== 'T' && (
-          <TextInput
-            className='border border-gray-300 p-2.5 mb-2.5'
-            placeholder="T"
-            value={t}
-            onChangeText={setT}
-            keyboardType="numeric"
-          />
-        )}
-      </View>
-
-        {/* Calculation and Clear buttons */}
-        <View className='flex flex-row justify-between mt-[270]'>
-          <TouchableOpacity className="w-[164px] h-[66px] p-4 bg-[#ff5a1f] rounded-2xl justify-center items-center gap-2 inline-flex" onPress={handleCalculation}>
-            <Text style={styles.buttonText}>=</Text>
-          </TouchableOpacity>
-          <TouchableOpacity className="w-[164px] h-[66px] p-[13.20px] bg-[#d9d8e0] rounded-2xl justify-center items-center gap-[6.60px] inline-flex" onPress={clearFields}>
-            <Text style={styles.buttonText}>C</Text>
-          </TouchableOpacity>
+          {selectedVariable !== 'P' && (
+            <TextInput
+              className="border-gray-300 mb-2.5 border p-2.5"
+              placeholder="P"
+              value={p}
+              onChangeText={setP}
+              keyboardType="numeric"
+            />
+          )}
+          {selectedVariable !== 'ρ' && (
+            <TextInput
+              className="border-gray-300 mb-2.5 border p-2.5"
+              placeholder="ρ"
+              value={ρ}
+              onChangeText={setρ}
+              keyboardType="numeric"
+            />
+          )}
+          {selectedVariable !== 'T' && (
+            <TextInput
+              className="border-gray-300 mb-2.5 border p-2.5"
+              placeholder="T"
+              value={t}
+              onChangeText={setT}
+              keyboardType="numeric"
+            />
+          )}
+          
         </View>
-
+         {/* Calculation and Clear buttons */}
+         
         {/* Modal for selecting variable */}
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
-          <View className="w-[304px] h-[316px] bg-[#f2f2f2] rounded-[32px] shadow justify-center items-center m-auto">
-            <Text className="absolute top-[43px] text-[#242424] text-xl font-semibold font-Inter_900Black">
+          <View className="m-auto h-[316px] w-[304px] items-center justify-center rounded-[32px] bg-[#f2f2f2] shadow">
+            <Text className="font-Inter_900Black absolute top-[43px] text-xl font-semibold text-[#242424]">
               Finding for?
             </Text>
-            
-            <View className="absolute top-[98px] flex-row justify-between w-[165px]">
+
+            <View className="absolute top-[98px] w-[165px] flex-row justify-between">
               <TouchableOpacity
-                className="w-[75px] h-[72px] bg-[#ff5a1f] rounded-[17px] justify-center items-center"
-                onPress={() => { setSelectedVariable('P'); setModalVisible(false); clearFields(); }}
-              >
-                <Text className="text-white text-[28px] font-bold font-Inter_900Black">P</Text>
+                className="h-[72px] w-[75px] items-center justify-center rounded-[17px] bg-[#ff5a1f]"
+                onPress={() => {
+                  setSelectedVariable('P');
+                  setModalVisible(false);
+                  clearFields();
+                }}>
+                <Text className="font-Inter_900Black text-[28px] font-bold text-white">P</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                className="w-[75px] h-[72px] bg-[#ff5a1f] rounded-[17px] justify-center items-center"
-                onPress={() => { setSelectedVariable('T'); setModalVisible(false); clearFields(); }}
-              >
-                <Text className="text-white text-[28px] font-bold font-Inter_900Black">T</Text>
+                className="h-[72px] w-[75px] items-center justify-center rounded-[17px] bg-[#ff5a1f]"
+                onPress={() => {
+                  setSelectedVariable('T');
+                  setModalVisible(false);
+                  clearFields();
+                }}>
+                <Text className="font-Inter_900Black text-[28px] font-bold text-white">T</Text>
               </TouchableOpacity>
             </View>
 
             <View className="absolute top-[185px] flex-col">
               <TouchableOpacity
-                className="w-[75px] h-[72px] bg-[#ff5a1f] rounded-[17px] justify-center items-center"
-                onPress={() => { setSelectedVariable('ρ'); setModalVisible(false); clearFields(); }}
-              >
-                <Text className="text-white text-[32px] font-bold font-Inter_900Black">ρ</Text>
+                className="h-[72px] w-[75px] items-center justify-center rounded-[17px] bg-[#ff5a1f]"
+                onPress={() => {
+                  setSelectedVariable('ρ');
+                  setModalVisible(false);
+                  clearFields();
+                }}>
+                <Text className="font-Inter_900Black text-[32px] font-bold text-white">ρ</Text>
               </TouchableOpacity>
             </View>
           </View>
         </Modal>
+
+        {/* Calculation and Clear buttons */}
+        <View className='flex flex-row justify-between'>
+            <TouchableOpacity className="w-[164px] h-[66px] p-4 left-[203px] top-[702px] absolute bg-[#ff5a1f] rounded-2xl justify-center items-center gap-2 inline-flex" onPress={handleCalculation}>
+              <Text  className="text-white text-[32px] font-bold font-Inter900_Black leading-[48px]">=</Text>
+            </TouchableOpacity>
+            <TouchableOpacity className="w-[164px] h-[66px] p-4 left-[24px] top-[702px] absolute bg-[#d9d8e0] rounded-2xl justify-center items-center gap-2 inline-flex" onPress={clearFields}>
+              <Text  className="font-bold text-[#19191b] text-[32px]  leading-[48px] font-Inter900_Black">C</Text>
+            </TouchableOpacity>
+        </View>
+        
+
+
       </View>
     </>
   );

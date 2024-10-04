@@ -4,7 +4,7 @@ import { Container } from '~/components/Container';
 import { ScreenContent } from '~/components/ScreenContent';
 export default function TopicRouter() {
   const routeToEqs=()=>{
-    router.push('/Eqs');
+    router.push('/EqsRouter');
   }
   const routeToContinuity=()=>{
     router.push('/Continuity');
