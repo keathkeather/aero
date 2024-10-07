@@ -10,7 +10,7 @@ export default function Continuity() {
   const [V2, setV2] = useState('');
   const [ρ1, setρ1] = useState('');
   const [ρ2, setρ2] = useState('');
-  const [selectedVariable, setSelectedVariable] = useState('P');
+  const [selectedVariable, setSelectedVariable] = useState('A1');
   const [modalVisible, setModalVisible] = useState(false);
   const [conversionModalVisible, setConversionModalVisible] = useState(false);
   const [result, setResult] = useState('');

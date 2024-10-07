@@ -201,7 +201,8 @@ const convertUnits = (value: number, fromUnit: string, toUnit: string): number =
   if (fromUnit === 'K' && toUnit === 'C') return value - 273.15;
 
   const baseValue = value / conversionRates[fromUnit];
-  return baseValue * conversionRates[toUnit];
+  const result = baseValue * conversionRates[toUnit];
+  return result;
 };
 
 const styles = StyleSheet.create({

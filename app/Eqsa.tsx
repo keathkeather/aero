@@ -21,8 +21,11 @@ export default function Eqsa() {
     if (selectedVariable === 'P') {
 
       let t1 = 288+(-0.0065*numericH)
+      let temperature = 288+(-0.0065*numericH);
       let  pressureAtAltitude= (Math.pow((t1/288),5.26))*101325;
       let density = (Math.pow((t1/288),4.26))*1.2256;
+      setρ(density.toString());
+      setT(temperature.toString());
       setResult(pressureAtAltitude.toString());
       // setT(temperature.toString());
       // setρ(density.toString());
@@ -65,21 +68,54 @@ export default function Eqsa() {
             className="w-[68.47px] h-[66px] p-4 left-[24px] top-[132px] absolute bg-[#ff5a1f] rounded-2xl justify-center items-center gap-2 inline-flex"
           >
             <Text className="text-white text-[32px] font-bold font-Inter_900Black">
-              {selectedVariable}
+              P
             </Text>
           </View>
           <View className="w-[213px] h-[53px] left-[154px] top-[139px] absolute rounded-[5px] border border-[#242424]">
-          <View className="w-[213px] h-[53px] left-0 top-0 absolute rounded-md border border-[#242424] ">
-            <TextInput
-              className=" left-[11.87px] top-[14.84px] absolute text-[#242424] text-xl font-bold font-Inter_900Black"
-              placeholder={selectedVariable}
-              value={result}
-              onChangeText={setP}
-              keyboardType="number-pad"
+            <View className="w-[213px] h-[53px] left-0 top-0 absolute rounded-md border border-[#242424] "></View>
+              <TextInput
+                className=" left-[11.87px] top-[14.84px] absolute text-[#242424] text-xl font-bold font-Inter_900Black"
+                placeholder="P"
+                value={result}
+                keyboardType="number-pad"
+                readOnly={true}
+              />
             
-            />
-          </View>
-        </View>
+           </View>
+           <View className='w-[68.47px] h-[66px] p-[13.20px] left-[24px] top-[211px] absolute bg-[#ff5a1f] rounded-2xl justify-center items-center gap-[6.60px] inline-flex'>
+              <TextInput className="text-white text-[32px] font-bold font-Inter_900Black">
+              ρ
+              </TextInput>
+           </View>
+           <View className='w-[213px] h-[53px] left-[154px] top-[218px] absolute rounded-[5px] border border-[#242424]'>
+              <View className="w-[213px] h-[53px] left-0 top-0 absolute rounded-md border border-[#242424]"></View> 
+                <TextInput 
+                  className="left-[11.87px] top-[14.84px] absolute text-[#242424] text-xl font-bold font-Inter_900Black"
+                  placeholder="ρ"
+                  value={ρ}
+                  keyboardType="number-pad"
+                  readOnly={true}
+                >
+                </TextInput>
+           </View>
+           <View className='w-[68.47px] h-[66px] p-[13.20px] left-[24px] top-[290px] absolute bg-[#ff5a1f] rounded-2xl justify-center items-center gap-[6.60px] inline-flex'>
+              <TextInput className="text-white text-[32px] font-bold font-Inter_900Black">
+              T
+              </TextInput>
+           </View>
+           <View className='w-[213px] h-[53px] left-[154px] top-[297px] absolute rounded-[5px] border border-[#242424]'>
+              <View className="w-[213px] h-[53px] left-0 top-0 absolute rounded-md border border-[#242424]"></View> 
+                <TextInput 
+                className="left-[11.87px] top-[14.84px] absolute text-[#242424] text-xl font-bold font-Inter_900Black"
+                placeholder={selectedVariable}
+                value={t}
+                keyboardType="number-pad"
+                readOnly={true}
+                >
+                </TextInput>
+           </View>
+           
+           
         <View className="w-[343px] h-[50px] left-[24px] top-[382px] absolute rounded-[5px] border border-black/10">
             <View className="w-[343px] h-[50px] left-0 top-0 absolute rounded border border-black/10">
               <TextInput

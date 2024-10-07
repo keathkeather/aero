@@ -10,7 +10,7 @@ export default function Bernoulli() {
   const [V2, setV2] = useState('');
   const [ρ1, setρ1] = useState('');
   const [ρ2, setρ2] = useState('');
-  const [selectedVariable, setSelectedVariable] = useState('P');
+  const [selectedVariable, setSelectedVariable] = useState('P1');
   const [conversionModalVisible, setConversionModalVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [result, setResult] = useState('');
@@ -161,6 +161,7 @@ export default function Bernoulli() {
           )}
         </View>
         
+        {/* this Modal is for selecting variables */}  
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View className="m-auto h-[316px] w-[304px] items-center justify-center rounded-[32px] bg-[#f2f2f2] shadow">
             <Text className="font-Inter_900Black absolute top-[43px] text-xl font-semibold text-[#242424]">
