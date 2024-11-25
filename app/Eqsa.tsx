@@ -24,8 +24,10 @@ export default function Eqsa() {
       let temperature = 288+(-0.0065*numericH);
       let  pressureAtAltitude= (Math.pow((t1/288),5.26))*101325;
       let density = (Math.pow((t1/288),4.26))*1.2256;
+
+
       setρ(density.toString());
-      setT(temperature.toString());
+      (numericH>11000)?setT("216.5"):setT(temperature.toString()); 
       setResult(pressureAtAltitude.toString());
       // setT(temperature.toString());
       // setρ(density.toString());
